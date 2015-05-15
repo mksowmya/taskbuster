@@ -23,7 +23,9 @@ def get_env_variable(var_name):
  
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#As we have renamed settings folder
+BASE_DIR = os.path.dirname((os.path.dirname(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'taskbuster.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,10 +70,16 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.tz',
+                'django.template.context_processors.static', 
             ],
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'taskbuster.wsgi.application'
 
@@ -105,3 +113,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
